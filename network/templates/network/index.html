@@ -1,0 +1,39 @@
+{% extends "network/layout.html" %}
+
+{% block script %}
+<script>
+    {% if user.is_authenticated %}
+        {% if page == "home" %}
+            document.addEventListener('DOMContentLoaded', getPost('{{ user.username }}', 'general', 1,'{{ user.username }}'))
+        {% elif page == "following"%}
+            document.addEventListener('DOMContentLoaded', getPost('{{ user.username }}', 'following', 1,'{{ user.username }}'));
+        {% endif %}
+    {% else %}
+        document.addEventListener('DOMContentLoaded', getPost('Notsignedin', 'general', 1,'Notsignedin'));
+    {% endif %}
+</script>
+{% endblock  %}
+{% block body %}
+{% if user.is_authenticated %}
+    <h2 class="welcome">Welcome <strong>{{ user.username }}</strong></h2>
+    {% else %}
+{% endif %}
+{% if page == "home" %}
+  <h3>All Posts</h3>
+  {% elif page == "following" %}
+  <h3>All Your Following Posts</h3>
+{% endif %}
+    <div id="posts" class="mainposts">
+    </div>
+    {% if pagenumber > 1 %}
+        <nav aria-label="Page navigation example" class="pagination">
+            <ul class="pagination">
+            <li class="page-item previous"><p class="page-link">Previous</p></li>
+            {% for i in postpage %}
+                <li class="page-item numbers"><p class="page-link"> {{ i }} </p></li>
+            {% endfor %}
+            <li class="page-item next"><p class="page-link">Next</p></li>
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}

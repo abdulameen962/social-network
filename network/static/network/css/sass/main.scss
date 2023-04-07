@@ -1,0 +1,270 @@
+@import 'mixins';
+@import "rules";
+body {
+    padding: 10px;
+    @include mp;
+    width: 100%;
+    overflow-x: hidden;
+    font-family: regular;
+    background: $greyback;
+}
+
+.submitbtn {
+    opacity: 0.6;
+    transition: 0.8s all ease;
+}
+
+div.form {
+    display: none;
+}
+
+.page-item {
+    cursor: pointer;
+}
+
+div.main {
+    display: flex;
+    position: relative;
+    nav.mainnav {
+        width: 15%;
+        display: block;
+        position: sticky;
+        top: 1px;
+        left: 0px;
+        height: 100vh;
+        padding-top: 35px;
+        border-right: 1px solid $lightgrey;
+        ul {
+            position: relative;
+            // @include border(green);
+            height: 600px;
+            margin-top: 20px;
+            li.nav-item {
+                a.nav-link {
+                    font-size: 18px;
+                    color: $dark;
+                    @include transition;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+            div.down {
+                position: absolute;
+                bottom: 15%;
+                li.nav-item {
+                    a {
+                        display: block;
+                        text-align: center;
+                    }
+                    a.secondary {
+                        @include defaultbutton;
+                        @include secondarybutton;
+                    }
+                    a.primary {
+                        @include defaultbutton;
+                        @include primarybtn;
+                        margin-bottom: 20px;
+                    }
+                }
+            }
+        }
+    }
+    div.body {
+        width: 85%;
+        @include flex(no);
+        justify-content: space-between;
+        align-items: flex-start;
+        // flex-wrap: wrap;
+        div.body_main {
+            @include mp;
+            padding: 55px 30px 20px 20px;
+            min-width: 850px;
+        }
+        div.body_sidebar {
+            @include mp;
+        }
+        nav.pagination {
+            float: right;
+            margin-top: 20px;
+            ul {
+                li {
+                    p {
+                        font-size: 20px;
+                        padding: 0.9rem 1rem;
+                    }
+                }
+            }
+        }
+        div.profile {
+            @include flex(no);
+            align-items: flex-start;
+            justify-content: flex-start;
+            height: 350px;
+            width: 950px;
+            div.image {
+                border: 2px solid $lightgrey;
+                border-radius: 10px;
+                height: 100%;
+                width: 35%;
+                @include flex(no);
+                img {
+                    max-width: 100%;
+                    max-height: 100%;
+                    border-radius: 10px;
+                    min-width: 95%;
+                }
+            }
+            div.text {
+                width: 65%;
+                padding: 35px 0px 0px 45px;
+                button {
+                    @include defaultbutton;
+                    @include primarybtn;
+                    // margin-top: 30px;
+                }
+                p {
+                    line-height: 20px;
+                    padding: 0;
+                    font-size: 18px;
+                }
+                h2 {
+                    padding-bottom: 15px;
+                }
+            }
+        }
+        form {
+            label {
+                font-size: 20px;
+            }
+            input {
+                font-size: 18px;
+                padding: 14px 34px;
+            }
+            textarea {
+                height: 220px;
+                resize: none;
+            }
+        }
+        div.mainposts {
+            @include grid(2);
+            gap: 30px 20px;
+            margin-top: 30px;
+            &>div.post {
+                @include post;
+            }
+        }
+        div.profile-main {
+            background: $whitegrey;
+            padding: 40px 50px;
+            border-radius: 20px;
+            margin: 30px 0px;
+            div.profile-posts {
+                @include grid(2);
+                gap: 30px 20px;
+                margin-top: 30px;
+                &>div.post {
+                    @include post;
+                    background: none;
+                }
+            }
+        }
+        div.users {
+            ul {
+                // background: green;
+                li.nav-item {
+                    padding: 10px 0px;
+                    list-style-type: none;
+                    a.user-link {
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+        div.login,
+        div.register {
+            ul {
+                li {
+                    a.user-link {
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+div.message_sidebar {
+    @include transition;
+    overflow: hidden;
+    position: relative;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    @include border($lightgrey);
+    border-right: none;
+    background: white;
+    button.message_cancel {
+        position: absolute;
+        font-size: 30px;
+        left: 10px;
+        top: 15px;
+        background: none;
+        @include mp;
+        outline: none;
+        border: none;
+    }
+    div.message_main {
+        @include flex(yes);
+        height: 100%;
+        width: 100%;
+        justify-content: flex-start;
+        div.message_main_messages {
+            width: 85%;
+            height: 95%;
+            div#messages {
+                height: 80%;
+                overflow-x: hidden;
+                overflow-y: scroll;
+                @include flex(yes);
+                align-items: flex-start;
+                justify-content: flex-end;
+                div.container-div {
+                    width: 100%;
+                    &>div {
+                        margin: 20px 0px;
+                        @include flex(yes);
+                        align-items: flex-start;
+                        justify-content: flex-start;
+                    }
+                    div.receiver {
+                        float: right;
+                    }
+                }
+            }
+            img {
+                width: 100px;
+                height: 120px;
+            }
+            form {
+                input[type="text"] {
+                    width: 100%;
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+}
+
+.message_inactive {
+    width: 0px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.side_bar_active {
+    width: 600px;
+    opacity: 1;
+    background: grey;
+}

@@ -1,0 +1,81 @@
+{% extends 'network/layout.html' %} {% load static %} {% block title %} {{ requesteduser.username }} profile {% endblock %} {% block script %}
+<script>
+    {% if user.is_authenticated %}
+        window.onload = getPost('{{ requesteduser.username }}', 'profile', 1, '{{ user.username }}'); 
+    {% endif %}
+</script>
+{% endblock %} {% block body %}
+<iframe id="stopperframe" style="display:none;"></iframe>
+<div class="profile">
+    <div class="image">
+        <img src="{% static '/network/images/avatar.jpg' %}" alt="{{ requesteduser.username }}" />
+    </div>
+    <div class="text">
+        <h2>{{ requesteduser.username }} </h2>
+        {% if followers != "" %}
+        <p class="followers"> {{ requesteduser.username }} have {{ followerscount }} follower(s)</p>
+        {% else %}
+        <p class="followers">{{ requesteduser.username }} have 0 followers</p>
+        {% endif %} {% if following != "" %}
+        <p> {{ requesteduser.username }} is following {{ followingcount }} person(s) which are {% for follow in following %} {{ follow.username }}, {% endfor %}
+        </p>
+        {% else %}
+        <p>{{ requesteduser.username }} is not following anyone</p>
+        {% endif %} {% if requesteduser != user %} {% comment %} check is user is following the requested user {% endcomment %}
+        <button class="btn btn-primary" onClick="messageView(event,'{{ requesteduser.username }}')">Message</button> {% if follow is True %}
+        <button onClick="unfollowUser(event, '{{ requesteduser.username }}')"> Unfollow </button> {% else %}
+        <button onClick="followUser(event, '{{ requesteduser.username }}')"> Follow </button> {% endif %} {% endif %}
+    </div>
+</div>
+<div class="profile-main">
+    {% if posts != "" %}
+    <h3>{{ requesteduser.username }}'s posts</h3>
+    <div id="posts" class="profile-posts">
+    </div>
+    {% if pagenumber > 1 %}
+    <nav aria-label="Page navigation example" class="pagination">
+        <ul class="pagination">
+            <li class="page-item previous">
+                <p class="page-link">Previous</p>
+            </li>
+            {% for i in postpages %}
+            <li class="page-item numbers">
+                <p class="page-link"> {{ i }} </p>
+            </li>
+            {% endfor %}
+            <li class="page-item next">
+                <p class="page-link">Next</p>
+            </li>
+        </ul>
+    </nav>
+    {% endif %} {% else %}
+    <p>{{ requesteduser.username }} have not made any posts <a href="{% url 'network:compose' %}"> Create posts </a></p>
+    {% endif %}
+</div>
+{% endblock %} {% block sidebar %}
+<div class="message_sidebar message_inactive">
+    <button onClick="messageView(event,'{{ requesteduser.username }}')" class="message_cancel">x</button>
+    <div class="message_main">
+        <div class="message_main_messages">
+            <div id="messages">
+
+            </div>
+            <form method="post" target="stopperframe" onsubmit="sendMessage(event,'{{ requesteduser.username }}')" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input class="form-control text-input" autofocus type="text" name="text_message" placeholder="Enter your message">
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <input class="form-control file-input" type="file" accept="image/*" name="text_image">
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control file-input" type="file" name="text_file">
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary" value="Send message">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

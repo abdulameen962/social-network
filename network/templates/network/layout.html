@@ -1,0 +1,68 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}Social Network{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="{% static 'network/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'network/css/styles.css' %}" rel="stylesheet">
+    <script src="{% static 'network/js/script.js' %}"></script>
+</head>
+
+<body>
+    <div class="main">
+        <nav class="navbar navbar-light bg-light mainnav">
+            <a class="navbar-brand" href="/">Network</a>
+
+            <div>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'network:index' %}">All Posts</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link post" href="{% url 'network:compose' %}">Create Posts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'network:posts' %}">Following</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'network:chats' %}">Messages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link post" href="{% url 'network:follow-users' %}">Users</a>
+                    </li>
+                    <div class="down">
+                        <li class="nav-item">
+                            <a class="nav-link secondary" href="{% url 'network:logout' %}">Log Out</a>
+                        </li>
+                    </div>
+                    {% else %}
+                    <div class="down">
+                        <li class="nav-item">
+                            <a class="nav-link primary" href="{% url 'network:login' %}">Log In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link secondary" href="{% url 'network:register' %}">Register</a>
+                        </li>
+                    </div>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+
+        <div class="body">
+            <div class="body_main">
+                {% block body %} {% endblock %}
+            </div>
+            <div class="body_sidebar">
+                {% block sidebar %} {% endblock %}
+            </div>
+        </div>
+    </div>
+    {% block script %} {% endblock %}
+</body>
+
+</html>

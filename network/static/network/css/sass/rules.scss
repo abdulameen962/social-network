@@ -1,0 +1,140 @@
+@import "mixins";
+@font-face {
+    font-family: regular;
+    src: url("./fonts/PlusJakartaSans-Regular.ttf"), local('sans-serif');
+    font-display: swap;
+}
+
+ul {
+    @include mp;
+    li {
+        list-style-position: inside;
+        @include mp;
+        span {
+            @include mp;
+            margin-left: -10px;
+        }
+    }
+}
+
+h1 {
+    @extend .font;
+    @extend .font-weight;
+    line-height: 1.308em;
+    font-size: 48px;
+    margin-bottom: 0px;
+    @include respond(tab) {
+        font-size: 43px;
+    }
+    @include respond(lphone) {
+        font-size: 36px;
+    }
+    @include respond(phone) {
+        font-size: 30px;
+    }
+}
+
+h2 {
+    @extend .font;
+    @extend .font-weight;
+    line-height: 1.316em;
+    font-size: 38px;
+    margin-bottom: 10px;
+    @include respond(tab) {
+        font-size: 38px;
+    }
+    @include respond(lphone) {
+        font-size: 32px;
+    }
+    @include respond(phone) {
+        font-size: 26px;
+    }
+}
+
+h3 {
+    @extend .font;
+    @extend .font-weight;
+    line-height: 1.375em;
+    font-size: 24px;
+    @include respond(tab) {
+        font-size: 24px;
+    }
+    @include respond(lphone) {
+        font-size: 22px;
+        line-height: 22px;
+    }
+    @include respond(phone) {
+        font-size: 20px;
+        line-height: 20px;
+    }
+}
+
+h4 {
+    @include h4;
+}
+
+h5 {
+    @extend .font;
+    @extend .font-weight;
+    line-height: 1.389em;
+    font-size: 18px;
+    @include respond(phone) {
+        font-size: 16px;
+    }
+}
+
+h6 {
+    @extend .font;
+    @extend .font-weight;
+    font-size: 16px;
+    line-height: 1.125em;
+}
+
+p {
+    @extend .font;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.800em;
+    padding: 10px 0px;
+}
+
+button {
+    @extend .font;
+    @extend .font-weight;
+    font-size: 16px;
+}
+
+.subtitle {
+    font-size: 18px;
+    @extend .font;
+    line-height: 1.2em;
+    font-weight: 300;
+    @include respond(tab) {
+        font-size: 16px;
+    }
+}
+
+.medtext {
+    font-size: 18px;
+    @extend .font;
+    line-height: 1.125em;
+    @include respond(tab) {
+        font-size: 18px;
+    }
+}
+
+a {
+    font-size: 16px;
+    @extend .font;
+    text-decoration: none;
+}
+
+input {
+    font-size: 16px;
+    @extend .font;
+}
+
+textarea {
+    font-size: 16px;
+    @extend .font;
+}

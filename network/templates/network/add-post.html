@@ -1,0 +1,17 @@
+{% extends 'network/layout.html' %}
+{% load static %}
+{% block Title %}  Add new posts {% endblock  %}
+{% block body %}
+<h3>Create Your Posts</h3>
+<iframe name="stopframe" style="display: none;" id="stopframe"></iframe>
+<h3 class="result"></h3>
+<form id="add-post" method="POST" target="stopframe" onSubmit="submitPost(event)";>
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="post"> Enter your  post: </label><br>
+        <textarea class="form-control" name="post" id="post" required></textarea>
+    </div>
+    <input class="btn btn-primary" id="submitbtn" type="submit" value="Create post" data-loading="Creating post" data-value="Create post">
+</form>
+
+{% endblock  %}

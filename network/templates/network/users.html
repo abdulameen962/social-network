@@ -1,0 +1,16 @@
+{% extends 'network/layout.html' %}
+{% block title %}  All users {% endblock  %}
+{% block body %}
+<div class="users">
+    <h2>All users</h2>
+    <ul>
+      {% for use in users %}
+        <li class="nav-item user">
+            <a class="user-link"  href="{% url 'network:profile'  use.username  %}"> {{ use.username }} </a>
+        </li>
+      {% endfor %}
+    </ul>
+</div>
+
+
+{% endblock  %}

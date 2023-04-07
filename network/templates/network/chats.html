@@ -1,0 +1,58 @@
+{% extends 'network/layout.html' %}
+{% block title %}Your chats {% endblock %}
+{% block body %}
+<h2>Your messages</h2>
+{% for chat in chats %}
+    {% if user == chat.lastmessage.sender %}
+        <div data-id="{{ chat.id }}" class="message read">
+        <h3>  {{ chat.lastmessage.receiver }} </h3>
+        {% comment %} check content of the message {% endcomment %}
+        {% if chat.lastmessage.textmessage is not None %}
+            <p> {{ chat.lastmessage.textmessage }} </p>
+
+        {% elif chat.lastmessage.imagemessage is not None %}
+           <p> 📷 </p>
+
+        {% elif chat.lastmessage.filemessage is not None %}
+           <p> 📄 </p>
+        {% endif %}
+        </div>
+
+        {% elif user == chat.lastmessage.receiver %}
+        {% if chat.lastmessage.is_read %}
+            <div data-id="{{ chat.id }}" class="message read">
+                <h3>  {{ chat.lastmessage.sender }} </h3>
+                {% comment %} check content of the message {% endcomment %}
+                {% if chat.lastmessage.textmessage is not None %}
+                    <p> {{ chat.lastmessage.textmessage }} </p>
+
+                {% elif chat.lastmessage.imagemessage is not None %}
+                <p> 📷 </p>
+
+                {% elif chat.lastmessage.filemessage is not None %}
+                <p> 📄 </p>
+                {% endif %}
+            </div>
+
+
+        {% else %}
+            <div data-id="{{ chat.id }}" class="message unread">
+                <h3>  {{ chat.lastmessage.sender }} </h3>
+                {% comment %} check content of the message {% endcomment %}
+                {% if chat.lastmessage.textmessage is not None %}
+                    <p> {{ chat.lastmessage.textmessage }} </p>
+
+                {% elif chat.lastmessage.imagemessage is not None %}
+                <p> 📷 </p>
+
+                {% elif chat.lastmessage.filemessage is not None %}
+                <p> 📄 </p>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% empty %}
+    <p>You have no conversation with anyone.</p>
+{% endfor %}
+
+{% endblock  %}
