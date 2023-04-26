@@ -606,14 +606,14 @@ def send_message(request,username):
         #check if files are present
         try:
             file = data.get("file",)
-        except MultiValueDictKeyError:
+        except MultiValueDictKeyError or data.get("file",) == "":
             file = ""
             
         #check if images are present
         try:
             image = data.get("image",)
             
-        except MultiValueDictKeyError:
+        except MultiValueDictKeyError or data.get("image",) == "":
             image = ""
             
         #check if chatgroup exists

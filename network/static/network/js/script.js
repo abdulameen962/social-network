@@ -440,8 +440,6 @@ function sendMessage(event, username) {
     var imagemessage = document.querySelector("[name='text_image']");
     var filemessage = document.querySelector("[name='text_file']");
     const csrftoken = document.querySelector("[name='csrfmiddlewaretoken']").value;
-    console.log(imagemessage.files[0]);
-    console.log(filemessage.files[0]);
     if (textmessage == "") {
         var error = document.getElementById("error");
         if (error) {
@@ -460,7 +458,7 @@ function sendMessage(event, username) {
         var parent = document.getElementById("messages");
         var containerdiv = document.createElement("div");
         var div = document.createElement("div");
-        div.className = "message sent bg-warning";
+        div.className = "message rceiver bg-warning";
         if (filemessage.value == "" && imagemessage.value == "") {
             div.innerHTML = `
                 <p> ${textmessage} </p>
@@ -484,27 +482,36 @@ function sendMessage(event, username) {
         }
         containerdiv.append(div);
         parent.append(containerdiv);
+        var file = "";
+        var image = "";
         var data = new FormData()
         data.append("text", textmessage)
         if (filemessage.value != "") {
             filemessage = filemessage.files[0];
-            // data.append("file", filemessage.files[0])
+            let reader = new FileReader()
+            reader.readAsDataURL(filemessage)
+            file = reader.result;
         } else if (filemessage.value == "") {
-            filemessage = "";
+            file = "";
         } else if (imagemessage.value != "") {
             imagemessage = imagemessage.files[0];
-            // data.append("image", imagemessage.files[0])
+            let reader = new FileReader()
+            reader.readAsDataURL(imagemessage)
+            image = reader.result;
         } else if (imagemessage.value == "") {
-            imagemessage = "";
+            image = "";
         }
         setTimeout(() => {
             fetch(`/send-message/${username}`, {
                     method: "POST",
                     headers: {
                         "X-CSRFToken": csrftoken,
-                        "Content-Type": "multipart/form-data",
                     },
-                    body: data
+                    body: JSON.stringify({
+                        "text": textmessage,
+                        "file": file,
+                        "image": image,
+                    })
                 })
                 .then(response => response.json().then(message => {
                     if (response.status == 201) {
